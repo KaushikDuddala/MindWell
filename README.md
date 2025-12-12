@@ -1,7 +1,5 @@
 # MindWell - Mental Health Awareness & Support Platform
 
-<div align="center">
-
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-16.0-black)
 ![React](https://img.shields.io/badge/React-19.2-61dafb)
@@ -9,8 +7,6 @@
 ![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ecf8e)
 
 A comprehensive, accessible mental health awareness website providing resources, professional counseling services, community support, and evidence-based information to destigmatize mental health.
-
-</div>
 
 ---
 
@@ -368,13 +364,21 @@ The platform includes a comprehensive approval system for counselors:
 
 ### Design Principles Implemented
 ✅ **Content Tailored to Audience**: Mental health language appropriate for all literacy levels
+
 ✅ **Responsibility Delegation**: Clear separation of user, counselor, and admin roles
+
 ✅ **Navigation & UX**: Intuitive sitemap with clear information hierarchy
+
 ✅ **Accessibility**: ADA compliant with WCAG 2.1 support
+
 ✅ **Responsive Design**: Mobile-first approach supporting all devices
+
 ✅ **Multiple Search Options**: Integrated search functionality
+
 ✅ **Rich Graphics**: Professional iconography with Lucide React
+
 ✅ **Clean Code**: TypeScript, organized components, validated HTML
+
 ✅ **Standards-Based**: Modern web standards, semantic HTML5
 
 ---
