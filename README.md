@@ -132,7 +132,7 @@ Voices4Minds is a modern, full-stack mental health platform designed to be a tru
 
 ## ♿ Accessibility Features
 
-MentalHub is built with accessibility as a core principle, ensuring everyone can access mental health resources:
+Voices4Minds is built with accessibility as a core principle, ensuring everyone can access mental health resources:
 
 - **WCAG 2.1 Compliance**
   - Semantic HTML structure
@@ -277,20 +277,21 @@ Our carefully curated purple and yellow color palette creates a calming, therape
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd mental3-main
+   git clone https://github.com/KaushikDuddala/Voices4Minds
+   cd voices4minds-main
    ```
 
 2. **Install dependencies**
    ```bash
-   pnpm install
+   npm i
    ```
 
 3. **Set up environment variables**
-   Create a `.env.local` file:
+   Create a `.env` file:
    ```env
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
    ```
 
 4. **Initialize the database**
@@ -300,15 +301,15 @@ Our carefully curated purple and yellow color palette creates a calming, therape
 
 5. **Start the development server**
    ```bash
-   pnpm dev
+   npm run dev
    ```
    
    The application will be available at `http://localhost:3000`
 
 ### Build for Production
 ```bash
-pnpm build
-pnpm start
+npm build 
+npm start
 ```
 
 ---
@@ -416,7 +417,7 @@ The project is optimized for deployment on:
 
 ## 📝 Contributing
 
-We welcome contributions to MentalHub. To contribute:
+We welcome contributions to Voices4Minds. To contribute:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
