@@ -10,8 +10,8 @@ import { CrisisBanner } from "@/components/crisis-banner"
 import { AccessibleSkipLink } from "@/components/accessible-skip-link"
 
 export const metadata: Metadata = {
-  title: "MindWell - Mental Health Support & Resources",
-  description: "Access mental health resources, connect with counselors, join supportive communities, and find help. MindWell provides compassionate care for anxiety, depression, and wellness.",
+  title: "Voices4Minds - Mental Health Support & Resources",
+  description: "Access mental health resources, connect with counselors, join supportive communities, and find help. Voices4Minds provides compassionate care for anxiety, depression, and wellness.",
   keywords: ["mental health", "counseling", "therapy", "anxiety", "depression", "support", "wellness"],
   generator: "v0.app",
   icons: {

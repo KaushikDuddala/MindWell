@@ -1,4 +1,4 @@
-# MindWell - Mental Health Awareness & Support Platform
+# Voices4Minds - Mental Health Awareness & Support Platform
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-16.0-black)
@@ -12,7 +12,7 @@ A comprehensive, accessible mental health awareness website providing resources,
 
 ## 🎯 Overview
 
-MindWell is a modern, full-stack mental health platform designed to be a trusted hub for individuals seeking mental health resources, professional counseling, and peer support. The platform combines educational content, professional services, and community engagement to create a holistic approach to mental health awareness and support.
+Voices4Minds is a modern, full-stack mental health platform designed to be a trusted hub for individuals seeking mental health resources, professional counseling, and peer support. The platform combines educational content, professional services, and community engagement to create a holistic approach to mental health awareness and support.
 
 ### Core Mission
 - **Destigmatize** mental health issues through education and community
@@ -451,4 +451,4 @@ For support, please:
 
 ---
 
-**MindWell** - Breaking the Stigma, Building Support, One Connection at a Time.
+**Voices4Minds** - Breaking the Stigma, Building Support, One Connection at a Time.

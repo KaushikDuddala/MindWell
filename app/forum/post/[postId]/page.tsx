@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ postId: s
 
   return {
     title: post ? `${post.title} | Forum` : "Forum Post",
-    description: "Community discussion on MindWell",
+    description: "Community discussion on Voices4Minds",
   }
 }
 

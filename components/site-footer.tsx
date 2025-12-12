@@ -10,7 +10,7 @@ export function SiteFooter() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Heart className="h-6 w-6 text-primary" aria-hidden="true" />
-              <span className="text-xl font-bold">MindWell</span>
+              <span className="text-xl font-bold">Voices4Minds</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Supporting mental health and wellness through compassionate care and community.
@@ -19,7 +19,7 @@ export function SiteFooter() {
               <h4 className="text-sm font-semibold mb-3">Follow Us</h4>
               <div className="flex items-center gap-4">
                 <a
-                  href="https://instagram.com/mindwell"
+                  href="https://instagram.com/Voices4Minds"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
@@ -28,7 +28,7 @@ export function SiteFooter() {
                   <Instagram className="h-5 w-5" />
                 </a>
                 <a
-                  href="https://twitter.com/mindwell"
+                  href="https://twitter.com/Voices4Minds"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
@@ -37,7 +37,7 @@ export function SiteFooter() {
                   <Twitter className="h-5 w-5" />
                 </a>
                 <a
-                  href="https://facebook.com/mindwell"
+                  href="https://facebook.com/Voices4Minds"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors"
@@ -115,8 +115,8 @@ export function SiteFooter() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
-                <a href="mailto:support@mindwell.org" className="hover:text-primary transition-colors">
-                  support@mindwell.org
+                <a href="mailto:support@Voices4Minds.org" className="hover:text-primary transition-colors">
+                  support@Voices4Minds.org
                 </a>
               </li>
               <li className="flex items-start gap-3">
@@ -126,7 +126,7 @@ export function SiteFooter() {
               <li className="flex items-center gap-3">
                 <MessageCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                 <a
-                  href="https://discord.gg/mindwell"
+                  href="https://discord.gg/Voices4Minds"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-primary transition-colors"
@@ -148,7 +148,7 @@ export function SiteFooter() {
             or text &quot;HELLO&quot; to 741741.
           </p>
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} MindWell. All rights reserved.
+            &copy; {new Date().getFullYear()} Voices4Minds. All rights reserved.
           </p>
         </div>
       </div>

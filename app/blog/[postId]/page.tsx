@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ postId: s
 
   return {
     title: post ? `${post.title} | Blog` : "Blog Post",
-    description: post?.excerpt || "Read this article on MindWell",
+    description: post?.excerpt || "Read this article on Voices4Minds",
   }
 }
 

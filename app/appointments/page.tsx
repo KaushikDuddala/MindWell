@@ -7,7 +7,7 @@ import { Calendar, MapPin, Award, CheckCircle, ArrowRight } from "lucide-react"
 import { ScrollAnimation } from "@/components/scroll-animation"
 
 export const metadata = {
-  title: "Find a Counselor | MindWell",
+  title: "Find a Counselor | Voices4Minds",
   description:
     "Connect with licensed mental health professionals. Browse our network of counselors and schedule appointments.",
 }

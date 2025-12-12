@@ -5,9 +5,9 @@ import { Target, Users, Heart, Shield, ArrowRight } from "lucide-react"
 import { ScrollAnimation } from "@/components/scroll-animation"
 
 export const metadata = {
-  title: "About MindWell | Our Mission",
+  title: "About Voices4Minds | Our Mission",
   description:
-    "Learn about MindWell's mission to provide accessible mental health support, resources, and community for individuals seeking wellness.",
+    "Learn about Voices4Minds's mission to provide accessible mental health support, resources, and community for individuals seeking wellness.",
 }
 
 export default function AboutPage() {
@@ -16,7 +16,7 @@ export default function AboutPage() {
       <div className="space-y-24">
         {/* Header */}
         <ScrollAnimation className="max-w-3xl mx-auto text-center space-y-6">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">About MindWell</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">About Voices4Minds</h1>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
             We believe mental health care should be accessible, compassionate, and stigma-free for everyone.
           </p>
@@ -28,7 +28,7 @@ export default function AboutPage() {
             <div className="space-y-6">
               <h2 className="text-3xl md:text-4xl font-bold">Our Mission</h2>
               <p className="text-muted-foreground leading-relaxed text-lg">
-                MindWell was founded with a clear mission: to break down barriers to mental health care and create a
+                Voices4Minds was founded with a clear mission: to break down barriers to mental health care and create a
                 supportive community where individuals feel safe seeking help.
               </p>
               <p className="text-muted-foreground leading-relaxed text-lg">

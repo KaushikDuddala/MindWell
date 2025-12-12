@@ -7,7 +7,7 @@ import { MessageSquare, Users, Plus, Pin, ArrowRight, MessageCircle } from "luci
 import { ScrollAnimation } from "@/components/scroll-animation"
 
 export const metadata = {
-  title: "Community Forum | MindWell",
+  title: "Community Forum | Voices4Minds",
   description:
     "Join our supportive community. Share experiences, ask questions, and connect with others on their mental health journey.",
 }
@@ -169,7 +169,7 @@ export default async function ForumPage() {
             </CardHeader>
             <CardContent className="text-center">
               <Button asChild size="lg" className="btn-animate">
-                <a href="https://discord.gg/mindwell" target="_blank" rel="noopener noreferrer">
+                <a href="https://discord.gg/Voices4Minds" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="h-5 w-5 mr-2" aria-hidden="true" />
                   Join Discord Server
                 </a>

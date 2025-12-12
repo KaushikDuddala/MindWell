@@ -7,7 +7,7 @@ import Link from "next/link"
 import { Calendar, Clock, MapPin, User } from "lucide-react"
 
 export const metadata = {
-  title: "My Appointments | MindWell",
+  title: "My Appointments | Voices4Minds",
   description: "View and manage your counseling appointments",
 }
 

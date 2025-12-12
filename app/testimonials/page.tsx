@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ScrollAnimation } from "@/components/scroll-animation"
 
 export const metadata = {
-  title: "Testimonials - Stories of Hope and Recovery | MindWell",
+  title: "Testimonials - Stories of Hope and Recovery | Voices4Minds",
   description:
     "Read inspiring stories from individuals who have overcome mental health challenges and found support through counseling and community.",
 }

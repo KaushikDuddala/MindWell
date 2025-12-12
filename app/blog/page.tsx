@@ -65,7 +65,7 @@ async function DraftsSection({ userId }: { userId: string }) {
 }
 
 export const metadata = {
-  title: "Mental Health Blog | MindWell",
+  title: "Mental Health Blog | Voices4Minds",
   description: "Read articles, personal stories, and expert advice about mental health, wellness, and recovery.",
 }
 

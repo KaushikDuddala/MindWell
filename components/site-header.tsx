@@ -70,7 +70,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-2">
             <Heart className="h-6 w-6 text-primary animate-pulse-soft" aria-hidden="true" />
             <Link href="/" className="text-xl font-bold hover:text-primary transition-colors">
-              MindWell
+              Voices4Minds
             </Link>
           </div>
 

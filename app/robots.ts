@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/dashboard", "/counselor", "/appointments/my-appointments", "/api"],
       },
     ],
-    sitemap: "https://mindwell.com/sitemap.xml",
+    sitemap: "https://Voices4Minds.com/sitemap.xml",
   }
 }

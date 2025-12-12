@@ -252,7 +252,7 @@ export default function SearchPage() {
         <section>
           <ScrollAnimation className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold">Browse Our Site</h2>
-            <p className="text-muted-foreground mt-2">Looking for something specific on MindWell?</p>
+            <p className="text-muted-foreground mt-2">Looking for something specific on Voices4Minds?</p>
           </ScrollAnimation>
           <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {quickLinks.map((link, index) => (
