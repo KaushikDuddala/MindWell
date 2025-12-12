@@ -182,28 +182,41 @@ export default function SearchPage() {
           <ScrollAnimation className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold">General Search Engines</h2>
           </ScrollAnimation>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            {searchEngines.map((engine, index) => (
-              <ScrollAnimation key={engine.name} delay={index * 50}>
-                <button
-                  onClick={() => handleSearch(engine.url)}
-                  disabled={!query.trim()}
-                  className={`${engine.color} text-white p-6 rounded-xl transition-all hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-left group w-full`}
-                  aria-label={`Search with ${engine.name}`}
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <engine.icon className="h-8 w-8" aria-hidden="true" />
-                    <ExternalLink
-                      className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <h3 className="font-bold text-lg mb-1">{engine.name}</h3>
-                  <p className="text-sm text-white/80">{engine.description}</p>
-                </button>
-              </ScrollAnimation>
-            ))}
-          </div>
+          {!query.trim() ? (
+            <ScrollAnimation className="max-w-4xl mx-auto">
+              <Card className="border-2 bg-primary/5">
+                <CardContent className="p-12 text-center">
+                  <Search className="h-12 w-12 text-primary mx-auto mb-4" aria-hidden="true" />
+                  <p className="text-lg font-semibold text-foreground mb-2">Enter a search query to get started</p>
+                  <p className="text-muted-foreground">
+                    Type in the search box above or select from suggested searches to search these engines
+                  </p>
+                </CardContent>
+              </Card>
+            </ScrollAnimation>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+              {searchEngines.map((engine, index) => (
+                <ScrollAnimation key={engine.name} delay={index * 50}>
+                  <button
+                    onClick={() => handleSearch(engine.url)}
+                    className={`${engine.color} text-white p-6 rounded-xl transition-all hover:scale-105 hover:shadow-lg text-left group w-full`}
+                    aria-label={`Search with ${engine.name}`}
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <engine.icon className="h-8 w-8" aria-hidden="true" />
+                      <ExternalLink
+                        className="h-5 w-5 opacity-70 group-hover:opacity-100 transition-opacity"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <h3 className="font-bold text-lg mb-1">{engine.name}</h3>
+                    <p className="text-sm text-white/80">{engine.description}</p>
+                  </button>
+                </ScrollAnimation>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Mental Health Resources */}
@@ -217,8 +230,7 @@ export default function SearchPage() {
               <ScrollAnimation key={resource.name} delay={index * 50}>
                 <button
                   onClick={() => handleSearch(resource.url)}
-                  disabled={!query.trim()}
-                  className={`${resource.color} text-white p-6 rounded-xl transition-all hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-left group w-full`}
+                  className={`${resource.color} text-white p-6 rounded-xl transition-all hover:scale-105 hover:shadow-lg text-left group w-full cursor-pointer`}
                   aria-label={`Search ${resource.name}`}
                 >
                   <div className="flex items-start justify-between mb-4">

@@ -1,0 +1,13 @@
+Subject: Sign in to MindWell
+
+Hi,
+
+Use the secure link below to complete signing in to your MindWell account:
+
+{{.confirmationURL}}
+
+If you did not request this sign-in, you can safely ignore this message.
+
+--
+MindWell
+{{.siteURL}}
