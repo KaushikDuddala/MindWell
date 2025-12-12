@@ -1,0 +1,377 @@
+================================================================================
+MENTAL HEALTH PLATFORM - DATABASE SETUP & RECOVERY GUIDE
+================================================================================
+
+This guide explains how to set up or restore the database for the Mental Health
+Platform using Supabase. If your Supabase instance is taken down or you need to
+migrate to a new instance, follow these instructions.
+
+================================================================================
+TABLE OF CONTENTS
+================================================================================
+1. Quick Setup (New Instance)
+2. Database Architecture Overview
+3. Detailed Table Descriptions
+4. Row Level Security (RLS) Policies
+5. Database Functions & Triggers
+6. Troubleshooting
+7. Manual Approval Workflows
+
+================================================================================
+1. QUICK SETUP (NEW INSTANCE)
+================================================================================
+
+STEP 1: Create a New Supabase Project
+--------------------------------------
+1. Go to https://supabase.com/dashboard
+2. Click "New Project"
+3. Choose organization and provide project details
+4. Wait for project to be provisioned (2-3 minutes)
+
+STEP 2: Run the Master Setup Script
+------------------------------------
+1. In your Supabase dashboard, navigate to "SQL Editor"
+2. Click "New Query"
+3. Copy and paste the entire contents of:
+   scripts/00_COMPLETE_DATABASE_SETUP.sql
+4. Click "Run" or press Cmd/Ctrl + Enter
+5. Wait for execution to complete (should take 10-20 seconds)
+6. Verify success: Go to "Table Editor" and confirm all tables exist
+
+STEP 3: Update Environment Variables
+-------------------------------------
+1. In Supabase dashboard, go to "Settings" > "API"
+2. Copy the following values:
+   - Project URL → NEXT_PUBLIC_SUPABASE_URL
+   - anon/public key → NEXT_PUBLIC_SUPABASE_ANON_KEY
+   - service_role key → SUPABASE_SERVICE_ROLE_KEY (keep secret!)
+3. In Supabase dashboard, go to "Settings" > "Database"
+4. Copy the connection string → POSTGRES_URL
+5. Update your .env.local or Vercel environment variables
+
+STEP 4: Enable Authentication
+------------------------------
+1. In Supabase dashboard, go to "Authentication" > "Settings"
+2. Under "Email Auth", ensure "Enable Email Signup" is ON
+3. Configure email templates as needed
+4. Save changes
+
+STEP 5: Test the Setup
+-----------------------
+1. Try signing up a new user in your application
+2. Verify the user appears in "Authentication" > "Users"
+3. Check that a profile was auto-created in the "profiles" table
+4. Test creating a forum post or testimonial
+
+Your database is now ready to use!
+
+================================================================================
+2. DATABASE ARCHITECTURE OVERVIEW
+================================================================================
+
+The platform uses 10 main tables organized into these functional areas:
+
+USER MANAGEMENT
+---------------
+- profiles: Core user information (extends auth.users)
+- counselor_profiles: Additional information for counselors
+
+APPOINTMENT SYSTEM
+------------------
+- counselor_availability: Weekly recurring availability schedule
+- counselor_date_overrides: Specific date blocks or special hours
+- appointments: Booked appointments between users and counselors
+
+COMMUNITY FEATURES
+------------------
+- forum_categories: Categories for forum discussions
+- forum_posts: User-created discussion threads
+- forum_replies: Replies to forum posts
+
+CONTENT & FEEDBACK
+------------------
+- blog_posts: Mental health articles and resources
+- testimonials: User testimonials (requires approval)
+
+KEY DESIGN PRINCIPLES:
+- All tables use UUID primary keys
+- Row Level Security (RLS) enabled on all tables
+- Automatic timestamp management (created_at, updated_at)
+- Referential integrity with foreign keys and CASCADE deletes
+
+================================================================================
+3. DETAILED TABLE DESCRIPTIONS
+================================================================================
+
+profiles
+--------
+Purpose: Core user information for all users
+Key Fields:
+  - id: UUID (references auth.users)
+  - full_name: User's full name
+  - user_type: 'user', 'counselor', or 'admin'
+  - avatar_url: Profile picture URL
+Notes: Automatically created via trigger when user signs up
+
+counselor_profiles
+------------------
+Purpose: Extended information for users with user_type='counselor'
+Key Fields:
+  - id: UUID (references profiles)
+  - bio: Professional biography
+  - specializations: Array of specialization areas
+  - credentials: Professional certifications
+  - approval_status: 'pending', 'approved', or 'rejected'
+  - is_accepting_patients: Whether counselor is accepting new patients
+Notes: Must be manually approved by admin before appearing in listings
+
+counselor_availability
+----------------------
+Purpose: Weekly recurring availability schedule
+Key Fields:
+  - counselor_id: UUID (references counselor_profiles)
+  - day_of_week: Integer 0-6 (0=Sunday, 6=Saturday)
+  - start_time: TIME
+  - end_time: TIME
+  - is_active: Boolean to temporarily disable slots
+Notes: Used for regular weekly schedules
+
+counselor_date_overrides
+-------------------------
+Purpose: Override weekly schedule for specific dates
+Key Fields:
+  - counselor_id: UUID (references auth.users)
+  - override_date: DATE
+  - is_available: false=blocked date, true=special availability
+  - start_time/end_time: Only used when is_available=true
+  - reason: Optional explanation (e.g., "On vacation")
+Notes: Takes precedence over weekly availability
+
+appointments
+------------
+Purpose: Booked appointments between users and counselors
+Key Fields:
+  - user_id: UUID (references profiles)
+  - counselor_id: UUID (references counselor_profiles)
+  - appointment_date: DATE
+  - start_time/end_time: TIME
+  - status: 'pending', 'confirmed', 'cancelled', or 'completed'
+  - notes: Appointment notes or reasons
+Notes: Both user and counselor can view/update their appointments
+
+forum_categories
+----------------
+Purpose: Categories for organizing forum discussions
+Key Fields:
+  - name: Display name (e.g., "Anxiety Support")
+  - slug: URL-friendly identifier (e.g., "anxiety-support")
+  - description: Category description
+Notes: Seeded with initial categories; add more as needed
+
+forum_posts
+-----------
+Purpose: User-created discussion threads
+Key Fields:
+  - author_id: UUID (references profiles)
+  - category_id: UUID (references forum_categories)
+  - title: Post title
+  - content: Post body (supports markdown)
+  - is_pinned: Whether post is pinned to top
+  - view_count: Number of views
+Notes: Publicly readable, authenticated users can post
+
+forum_replies
+-------------
+Purpose: Replies to forum posts
+Key Fields:
+  - post_id: UUID (references forum_posts)
+  - author_id: UUID (references profiles)
+  - content: Reply text
+Notes: Publicly readable, authenticated users can reply
+
+blog_posts
+----------
+Purpose: Mental health articles and educational content
+Key Fields:
+  - author_id: UUID (references profiles)
+  - title: Article title
+  - content: Article body
+  - excerpt: Short summary
+  - category: Article category
+  - tags: Array of tags
+  - is_published: Whether article is live
+Notes: Only published posts visible to public
+
+testimonials
+------------
+Purpose: User testimonials about the platform
+Key Fields:
+  - author_name: Testimonial author (can be anonymous)
+  - content: Testimonial text
+  - is_approved: Admin approval status
+  - is_featured: Whether to feature prominently
+Notes: Must be approved to appear publicly
+
+================================================================================
+4. ROW LEVEL SECURITY (RLS) POLICIES
+================================================================================
+
+RLS ensures users can only access data they're authorized to see. Key policies:
+
+profiles
+--------
+✓ SELECT: Anyone can view all profiles (public data)
+✓ INSERT: Users can only create their own profile (auth.uid() = id)
+✓ UPDATE: Users can only update their own profile
+
+counselor_profiles
+------------------
+✓ SELECT: Anyone can view all counselor profiles
+✓ INSERT: Counselors can only create their own profile
+✓ UPDATE: Counselors can only update their own profile
+
+counselor_availability & counselor_date_overrides
+--------------------------------------------------
+✓ SELECT: Anyone can view (needed for booking system)
+✓ INSERT/UPDATE/DELETE: Only the counselor who owns the schedule
+
+appointments
+------------
+✓ SELECT: Only user or counselor involved can view
+✓ INSERT: Only users can create appointments (not counselors)
+✓ UPDATE: Either party can update (for status changes)
+✓ DELETE: Either party can cancel
+
+forum_posts & forum_replies
+----------------------------
+✓ SELECT: Anyone can view all posts/replies
+✓ INSERT: Only authenticated users can post/reply
+✓ UPDATE/DELETE: Only the author can edit/delete
+
+blog_posts
+----------
+✓ SELECT: Public can see published posts; authors see their own drafts
+✓ INSERT: Only authenticated users can create
+✓ UPDATE/DELETE: Only the author
+
+testimonials
+------------
+✓ SELECT: Only approved testimonials visible
+✓ INSERT: Anyone can submit (allows anonymous submissions)
+
+================================================================================
+5. DATABASE FUNCTIONS & TRIGGERS
+================================================================================
+
+handle_new_user()
+-----------------
+Purpose: Automatically create profile when user signs up
+Trigger: AFTER INSERT on auth.users
+Behavior:
+  - Extracts full_name and user_type from signup metadata
+  - Creates matching row in profiles table
+  - Uses ON CONFLICT to prevent duplicates
+
+update_updated_at_column()
+--------------------------
+Purpose: Automatically update updated_at timestamp on row changes
+Triggers: BEFORE UPDATE on multiple tables:
+  - profiles
+  - counselor_profiles
+  - appointments
+  - forum_posts
+  - forum_replies
+  - blog_posts
+
+================================================================================
+6. TROUBLESHOOTING
+================================================================================
+
+PROBLEM: "new row violates row-level security policy"
+SOLUTION: Check that the user is authenticated and the policy conditions match
+         Example: counselor_availability requires auth.uid() = counselor_id
+
+PROBLEM: Testimonials not showing up
+SOLUTION: Testimonials require manual approval. Set is_approved=true:
+         UPDATE testimonials SET is_approved = true WHERE id = '<uuid>';
+
+PROBLEM: Counselor not appearing in booking list
+SOLUTION: Counselors require approval. Set approval_status='approved':
+         UPDATE counselor_profiles 
+         SET approval_status = 'approved' 
+         WHERE id = '<counselor_uuid>';
+
+PROBLEM: Profile not created on signup
+SOLUTION: Check that handle_new_user trigger exists and is enabled:
+         SELECT * FROM pg_trigger WHERE tgname = 'on_auth_user_created';
+
+PROBLEM: Cannot book appointment
+SOLUTION: Verify counselor has availability set:
+         SELECT * FROM counselor_availability WHERE counselor_id = '<uuid>';
+
+PROBLEM: Users can see other users' appointments
+SOLUTION: Verify RLS is enabled:
+         SELECT tablename, rowsecurity FROM pg_tables 
+         WHERE schemaname = 'public' AND tablename = 'appointments';
+
+================================================================================
+7. MANUAL APPROVAL WORKFLOWS
+================================================================================
+
+APPROVING COUNSELORS
+--------------------
+New counselors default to approval_status='pending'. To approve:
+
+1. In Supabase dashboard, go to "Table Editor" > "counselor_profiles"
+2. Find the counselor's row (filter by approval_status='pending')
+3. Click the row to edit
+4. Change approval_status to 'approved'
+5. Click Save
+
+SQL Alternative:
+UPDATE counselor_profiles 
+SET approval_status = 'approved' 
+WHERE id = '<counselor_user_id>';
+
+APPROVING TESTIMONIALS
+----------------------
+New testimonials default to is_approved=false. To approve:
+
+1. In Supabase dashboard, go to "Table Editor" > "testimonials"
+2. Find testimonials with is_approved=false
+3. Click the row to edit
+4. Change is_approved to true
+5. Optionally set is_featured=true for homepage display
+6. Click Save
+
+SQL Alternative:
+UPDATE testimonials 
+SET is_approved = true, is_featured = true 
+WHERE id = '<testimonial_id>';
+
+MANAGING APPOINTMENTS
+---------------------
+To update appointment status (confirm, cancel, complete):
+
+1. Go to "Table Editor" > "appointments"
+2. Find the appointment
+3. Update the status field to one of:
+   - 'pending': Initial state
+   - 'confirmed': Counselor confirmed
+   - 'cancelled': Either party cancelled
+   - 'completed': Session finished
+4. Click Save
+
+================================================================================
+SUPPORT & ADDITIONAL RESOURCES
+================================================================================
+
+Supabase Documentation: https://supabase.com/docs
+RLS Guide: https://supabase.com/docs/guides/auth/row-level-security
+SQL Editor: https://supabase.com/docs/guides/database/overview
+
+For platform-specific questions, refer to the application documentation.
+
+================================================================================
+END OF GUIDE
+================================================================================

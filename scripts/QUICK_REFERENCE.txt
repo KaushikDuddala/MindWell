@@ -1,0 +1,74 @@
+================================================================================
+MENTAL HEALTH PLATFORM - QUICK REFERENCE CARD
+================================================================================
+
+SETUP NEW DATABASE
+==================
+1. Create Supabase project at https://supabase.com
+2. Run scripts/00_COMPLETE_DATABASE_SETUP.sql in SQL Editor
+3. Copy API keys and connection strings to .env
+4. Enable email auth in Authentication settings
+
+APPROVE COUNSELOR
+=================
+UPDATE counselor_profiles 
+SET approval_status = 'approved' 
+WHERE id = '<counselor_id>';
+
+APPROVE TESTIMONIAL
+===================
+UPDATE testimonials 
+SET is_approved = true, is_featured = true 
+WHERE id = '<testimonial_id>';
+
+CHECK COUNSELOR AVAILABILITY
+============================
+-- Weekly schedule
+SELECT * FROM counselor_availability 
+WHERE counselor_id = '<counselor_id>';
+
+-- Date overrides
+SELECT * FROM counselor_date_overrides 
+WHERE counselor_id = '<counselor_id>';
+
+VIEW ALL APPOINTMENTS FOR COUNSELOR
+====================================
+SELECT 
+  a.appointment_date,
+  a.start_time,
+  a.status,
+  p.full_name as patient_name
+FROM appointments a
+JOIN profiles p ON a.user_id = p.id
+WHERE a.counselor_id = '<counselor_id>'
+ORDER BY a.appointment_date DESC;
+
+VIEW USER STATISTICS
+====================
+-- Total users by type
+SELECT user_type, COUNT(*) 
+FROM profiles 
+GROUP BY user_type;
+
+-- Total appointments
+SELECT status, COUNT(*) 
+FROM appointments 
+GROUP BY status;
+
+-- Forum activity
+SELECT 
+  fc.name as category,
+  COUNT(fp.id) as post_count
+FROM forum_categories fc
+LEFT JOIN forum_posts fp ON fc.id = fp.category_id
+GROUP BY fc.name;
+
+BACKUP DATABASE
+===============
+pg_dump -h <host> -U postgres -d <database> > backup_$(date +%Y%m%d).sql
+
+RESTORE DATABASE
+================
+psql -h <host> -U postgres -d <database> < backup_file.sql
+
+================================================================================
